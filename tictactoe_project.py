@@ -26,33 +26,34 @@ def player_1_move():
 
 def evaluate():
     while True:
-        if "xxx" in game_board:
-            print(game_board)
-            print(player_1 + " won! Congratulations!")
-            return
-        elif "ooo" in game_board: 
-            print(game_board)
-            print(player_2 + " won! Congratulations!")
-            return
-        elif "-" not in game_board:
-            print(game_board)
-            print ("It's a tie!")
-            return
-        else: 
-            print("Continue.")
-            return
+        for i in range(21):
+            if game_board[i] == game_board[i + 1] == game_board[i + 2] == str("x"): 
+                print(game_board)
+                print(player_1 + " won! Congratulations!")
+                return
+            if game_board[i] == game_board[i + 1] == game_board[i + 2] == o: 
+                print(game_board)
+                print(player_2 + " won! Congratulations!")
+                return
+            elif "-" not in game_board:
+                print(game_board)
+                print ("It's a tie!")
+                return
+            else: 
+                print("Continue.")
+                return
 
 print("Welcome to Ruth's TicTacToe game.\n")
 
 print("\n" + player_1 + " is x.\n" + player_2 + " is o.\n")
 
 game_board = list(20 * "-")
-visual_game_board = 
 
 while True:
     print(game_board)
     player_1_move()
     evaluate()
+
     
 
 
