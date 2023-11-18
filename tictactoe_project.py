@@ -1,4 +1,4 @@
-while True: 
+while True:
     players_amount = int(input("How many players? Enter 1 or 2. "))
     if players_amount in [1,2]:
         player_1 = input("Please enter the name for player 1. ").title()
@@ -46,7 +46,8 @@ print("Welcome to Ruth's TicTacToe game.\n")
 
 print("\n" + player_1 + " is x.\n" + player_2 + " is o.\n")
 
-game_board = 20 * "-"
+game_board = list(20 * "-")
+visual_game_board = 
 
 while True:
     print(game_board)
