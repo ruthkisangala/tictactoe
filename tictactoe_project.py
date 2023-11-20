@@ -52,14 +52,16 @@ def terminator_move(position):
 
 
 def evaluate(player, mark):
-    print("\n" + "".join(game_board))
     for i in range(18):
         if game_board[i] == game_board[i + 1] == game_board[i + 2] == mark: 
+            print("\n" + "".join(game_board))
             print(player + " won! Congratulations!\n")
             return False
     if "-" not in game_board:
+        print("\n" + "".join(game_board))
         print ("It's a tie!")
         return False
+    print("".join(game_board) + "\n")
 
 #Greeting
 print("Welcome to Ruth's TicTacToe game.\n")
@@ -67,22 +69,21 @@ print("Welcome to Ruth's TicTacToe game.\n")
 print("\n" + player_1 + " is x.\n" + player_2 + " is o.\n")
 
 game_board = list(20 * "-")
-print("".join(game_board) +"\n")
+print("".join(game_board) + "\n")
 
 #Actual game
 while True:
+    
     position = player_move(player_1)
     move(position, "x", player_1)
     if evaluate(player_1, "x") == False:
         break
     elif players_amount == 2:
-        print("".join(game_board) +"\n")
         position = player_move(player_2)
         move(position, "o", player_2)
         if evaluate(player_2, "o") == False:
             break
     elif players_amount == 1:
-        print("".join(game_board) +"\n")
         #robot_move()
         terminator_move(position)
         if evaluate(player_2, "o") == False:
