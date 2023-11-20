@@ -37,6 +37,21 @@ def robot_move():
             print("Same number. Try again, Robot.")
 
 def terminator_move(position):
+    for i in range (18):
+        if game_board[i] == game_board[i+2] == "o":
+            if game_board[i+1] == "-":
+                game_board[i+1] = "o"
+                return True
+        elif game_board[i] == game_board[i+1] == "o":
+            if game_board[i+2] == "-":
+                game_board[i+2] = "o"
+                return True 
+    for i in range (2,19):
+        if game_board[i] == game_board[i+1] == "o":
+            if game_board[i-1] == "-":
+                game_board[i+2] = "o"
+                return True
+            
     if position <= 18:
         position_robot = position + 1
         if game_board[position_robot] == "-":
