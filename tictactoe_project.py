@@ -17,7 +17,7 @@ def player_1_move():
         if input_player_1 in range(0,20):
             if game_board[input_player_1] == "-":
                 game_board[input_player_1] = "x"
-                return
+                return input_player_1
             else: 
                 print(f"{player_1}, chose a free space.")
         else: 
@@ -46,6 +46,19 @@ def robot_move():
         else:
             print("Same number. Try again, Robot.")
 
+def terminator_move():
+    if input_player_1 <= 18:
+        input_robot = input_player_1 + 1
+        if game_board[input_robot] == "-":
+            game_board[input_robot] = "o"
+    else:
+        for i in range(1, (input_player_1 + 1)):
+            input_robot = input_player_1 - i 
+            print(input_robot)
+            if game_board[input_robot] == "-":
+                game_board[input_robot] = "o"
+                return False
+
 def evaluate():
     for i in range(18):
         if game_board[i] == game_board[i + 1] == game_board[i + 2] == "x": 
@@ -61,12 +74,14 @@ def evaluate():
         print ("It's a tie!")
         return False
 
+#Greeting
 print("Welcome to Ruth's TicTacToe game.\n")
 
 print("\n" + player_1 + " is x.\n" + player_2 + " is o.\n")
 
 game_board = list(20 * "-")
 
+#Actual game
 while True:
     print("".join(game_board) +"\n")
     player_1_move()
@@ -79,7 +94,7 @@ while True:
             break
     elif players_amount == 1:
         print("".join(game_board) +"\n")
-        robot_move()
+        terminator_move()
         if evaluate() == False:
             break
     
