@@ -11,29 +11,19 @@ while True:
     else:
         print("Invalid number.")
 
-def player_1_move():
+def player_move(player):
     while True:
-        input_player_1 = int(input(f"{player_1}, please chose a number from 1 to 20 where to set your x!\n{player_1} = ")) - 1
-        if input_player_1 in range(0,20):
-            if game_board[input_player_1] == "-":
-                game_board[input_player_1] = "x"
-                return input_player_1
-            else: 
-                print(f"{player_1}, chose a free space.")
+        input_player = int(input(f"{player}, please chose a number from 1 to 20 where to set your x!\n{player} = ")) - 1
+        if input_player in range(0,20):
+            return input_player
         else: 
-            print(f"{player_1}, enter a valid number!")
+            print(f"{player}, enter a valid number!")
 
-def player_2_move():
-    while True:
-        input_player_2 = int(input(f"{player_2}, please chose a number from 1 to 20 where to set your x!\n{player_2} = ")) - 1
-        if input_player_2 in range(0,20):
-            if game_board[input_player_2] == "-":
-                game_board[input_player_2] = "o"
-                return False
-            else: 
-                print(f"{player_2}, chose a free space.")
-        else: 
-            print(f"{player_2}, enter a valid number!")
+def move(position, mark, player):
+    if game_board[position] == "-":
+        game_board[position] = mark
+    else: 
+        print(f"{player}, chose a free space.")
 
 def robot_move():
     while True:
@@ -42,35 +32,32 @@ def robot_move():
         print("Robot = " + str(input_robot + 1))
         if game_board[input_robot] == "-":
             game_board[input_robot] = "o"
-            return False
+            return
         else:
             print("Same number. Try again, Robot.")
 
-def terminator_move():
-    if input_player_1 <= 18:
-        input_robot = input_player_1 + 1
-        if game_board[input_robot] == "-":
-            game_board[input_robot] = "o"
-    else:
-        for i in range(1, (input_player_1 + 1)):
-            input_robot = input_player_1 - i 
-            print(input_robot)
-            if game_board[input_robot] == "-":
-                game_board[input_robot] = "o"
-                return False
+def terminator_move(position):
+    if position <= 18:
+        position_robot = position + 1
+        if game_board[position_robot] == "-":
+            print("Robot =",position_robot + 1)
+            game_board[position_robot] = "o"
+            return True
+    for i in range(1, position + 1):
+        position_robot = position - i 
+        print("Robot = ",position_robot + 1)
+        if game_board[position_robot] == "-":
+            game_board[position_robot] = "o"
+            return True
 
-def evaluate():
+
+def evaluate(player, mark):
+    print("\n" + "".join(game_board))
     for i in range(18):
-        if game_board[i] == game_board[i + 1] == game_board[i + 2] == "x": 
-            print(game_board)
-            print(player_1 + " won! Congratulations!")
-            return False
-        elif game_board[i] == game_board[i + 1] == game_board[i + 2] == "o": 
-            print(game_board)
-            print(player_2 + " won! Congratulations!")
+        if game_board[i] == game_board[i + 1] == game_board[i + 2] == mark: 
+            print(player + " won! Congratulations!\n")
             return False
     if "-" not in game_board:
-        print(game_board)
         print ("It's a tie!")
         return False
 
@@ -80,22 +67,25 @@ print("Welcome to Ruth's TicTacToe game.\n")
 print("\n" + player_1 + " is x.\n" + player_2 + " is o.\n")
 
 game_board = list(20 * "-")
+print("".join(game_board) +"\n")
 
 #Actual game
 while True:
-    print("".join(game_board) +"\n")
-    player_1_move()
-    if evaluate() == False:
+    position = player_move(player_1)
+    move(position, "x", player_1)
+    if evaluate(player_1, "x") == False:
         break
     elif players_amount == 2:
         print("".join(game_board) +"\n")
-        player_2_move()
-        if evaluate() == False:
+        position = player_move(player_2)
+        move(position, "o", player_2)
+        if evaluate(player_2, "o") == False:
             break
     elif players_amount == 1:
         print("".join(game_board) +"\n")
-        terminator_move()
-        if evaluate() == False:
+        #robot_move()
+        terminator_move(position)
+        if evaluate(player_2, "o") == False:
             break
     
 
